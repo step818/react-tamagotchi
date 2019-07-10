@@ -20,7 +20,7 @@ class App extends React.Component{
     var newCurrentOverallHealth = Object.assign({}, this.state.currentOverallHealth, { [newActionId]: newAction
     });
     // Update time effects below this comment.//
-    newCurrentOverallHealth[newActionId];
+    newCurrentOverallHealth[newActionId].formattedWaitTime=newCurrentOverallHealth[newActionId].timeOpen.fromNow(true);
     this.setState({currentOverallHealth: newCurrentOverallHealth});
   }
 
@@ -34,6 +34,22 @@ class App extends React.Component{
 
   handleChangingAttentionHealth() {
 
+  }
+
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() => this.updateActionElapsedWaitTime(), 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.waitTimeUpdateTimer);
+  }
+
+  updateActionElapsedWaitTime() {
+    var newCurrentOverallHealth = Object.assign({}, this.state.currentOverallHealth);
+    Object.keys(newCurrentOverallHealth).forEach(actionId => {
+      newCurrentOverallHealth[actionId].formattedWaitTime = (newCurrentOverallHealth[actionId].timeOpen).fromNow(true);
+    });
+    this.setState({currentOverallHealth: newCurrentOverallHealth});
   }
 
   render(){

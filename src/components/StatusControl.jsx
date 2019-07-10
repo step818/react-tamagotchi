@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import FullStatus from './FullStatus';
 import HungryStatus from './HungryStatus';
 import SleepyStatus from './SleepyStatus';
@@ -34,7 +36,7 @@ class StatusControl extends React{
     if (this.state.fullStatusVisible){
       currentlyVisibleContent = <FullStatus/>;
     } else if (this.state.hungryStatusVisible){
-      currentlyVisibleContent = <HungryStatus/>;
+      currentlyVisibleContent = <HungryStatus onHandleHungerMood={this.handleHungerMood}/>;
     } else if (this.state.sleepyStatusVisible){
       currentlyVisibleContent = <SleepyStatus/>;
     } else if (this.state.lonelyStatusVisible){
@@ -49,5 +51,9 @@ class StatusControl extends React{
     );
   }
 }
+
+StatusControl.propTypes = {
+  onNewAction: PropTypes.func
+};
 
 export default StatusControl;
